@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue表单输入绑定</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+
+        #app {
+            width: 50%;
+            margin: auto;
+        }
+
+        button {
+            font-size: 16px;
+        }
+
+        input,
+        textarea {
+            font-size: 15px;
+            padding: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 文档最前面文字部分需要看 -->
+
+        <!-- *** 基础用法 *** -->
+        <!-- 输入框 -->
+        <input v-model="message" placeholder="Enter your message">
+        <p>Message is: {{message}}</p>
+        <hr>
+        <!-- 多行文本 -->
+        <textarea v-model="text" placeholder="Add multiple lines" name="" id="" cols="30" rows="10"></textarea>
+        <p>Text is:</p>
+        <p style="white-space: pre-line;">{{text}}</p>
+        <hr>
+        <!-- 单个复选框，绑定到布尔值 -->
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{checked}}</label>
+        <hr>
+        <!-- 多个复选框，绑定到同一个数组 -->
+        <input type="checkbox" id="caroline" value="Caroline" v-model="checkedNames">
+        <label for="caroline">Caroline</label>
+        <input type="checkbox" id="rabbit" value="Rabbit" v-model="checkedNames">
+        <label for="rabbit">Rabbit</label>
+        <input type="checkbox" id="bear" value="Bear" v-model="checkedNames">
+        <label for="bear">Bear</label>
+        <p>Checked Names: {{checkedNames}}</p>
+        <hr>
+        <!-- 单选按钮 -->
+        <!-- 当选中时，`picked` 为字符串 "Salad" -->
+        <input type="radio" id="salad" value="Salad" v-model="picked">
+        <label for="salad">Salad</label>
+        <br>
+        <input type="radio" id="hamburger" value="Hamburger" v-model="picked">
+        <label for="hamburger">Hamburger</label>
+        <p>Picked: {{picked}}</p>
+        <hr>
+        <!-- 下拉列表单选 -->
+        <select v-model="selected">
+            <!-- 当选中时，`selected` 为字符串 "abc" -->
+            <!-- 如果 v-model 表达式的初始值未能匹配任何选项，<select> 元素将被渲染为“未选中”状态。
+                在 iOS 中，这会使用户无法选择第一个选项。因为这样的情况下，iOS 不会触发 change 事件。
+                因此，更推荐像上面这样提供一个值为空的禁用选项。 -->
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <p>Selected: {{selected}}</p>
+        <hr>
+        <!-- 下拉列表多选，绑定到一个数组 -->
+        <!-- ？？？不能多选啊？？？ -->
+        <select v-model="multiSelected" multiple style="width: 50px;">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <p>Selected: {{multiSelected}}</p>
+        <hr>
+        <!-- 下拉列表，用 v-for 渲染的动态选项 -->
+        <select v-model="listSelected">
+            <option v-for="option in options" v-bind:value="option.value">{{option.text}}</option>
+        </select>
+        <p>Selected: {{listSelected}}</p>
+        <hr>
+
+        <!-- *** 值绑定 ***（不太懂） -->
+        <!-- 有时希望把值绑定到 Vue 实例的一个动态属性上，这时可以用 v-bind 实现，并且这个属性的值可以不是字符串。 -->
+        <!-- 复选框 -->
+        <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+        <!-- 没有 id 也能关联上？ -->
+        <label>{{toggle}}</label>
+        <!-- 这里的 true-value 和 false-value 特性并不会影响输入控件的 value 特性，因为浏览器在提交表单时并不会包含未被选中的复选框。
+             如果要确保表单中这两个值中的一个能够被提交，(比如“yes”或“no”)，请换用单选按钮。-->
+        <hr>
+        <!-- 单选按钮 ？？？不懂 -->
+        <input type="radio" v-model="pick" v-bind:value="a">
+        <label></label>
+
+        <!-- 选择框的选项 -->
+
+
+
+        <!-- *** 修饰符 *** -->
+
+        
+
+    </div>
+
+    <script src="vue-11-form-bind.js"></script>
+</body>
+
+</html>

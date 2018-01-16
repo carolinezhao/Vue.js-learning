@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>组件之间的事件</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{total}}</p>
+        <!-- 用 v-on 绑定自定义事件，该事件由子组件触发 $emit('increment')，传给父组件的事件 incrementTotal -->
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+        <!-- 绑定原生事件？ -->
+        <button-counter v-on:click.native="noincrement"></button-counter>
+        
+        <br>
+        <br>
+        <currency-input v-model="price"></currency-input>
+    </div>
+
+    <script src="vue-13-component-event.js"></script>
+</body>
+
+</html>

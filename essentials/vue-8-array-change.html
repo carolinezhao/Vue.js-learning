@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue数组更新检测</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+
+        button {
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 数组更新检测
+        变异方法 (mutation method)：触发视图更新，会改变被这些方法调用的原始数组。 push() pop() shift() unshift() splice() sort() reverse() 
+        非变异方法 (non-mutating method)：不会改变原始数组，但总是返回一个新数组，即新数组替换旧数组。 filter() concat() slice() -->
+        <ul>
+            <li v-for="item in items">
+                {{item.todo}}
+            </li>
+        </ul>
+        <p>{{items}}</p>
+        <!-- Vue 为了使得 DOM 元素得到最大范围的重用，用一个含有相同元素的数组去替换原来的数组是非常高效的操作。 -->
+        <button v-on:click="replace">Filter an array</button>
+
+        <!-- 由于 JavaScript 的限制，有两种变动的数组不能被 Vue 检测（以后再看） -->
+
+        
+        <!-- 对象更改检测注意事项（以后再看） -->
+
+
+        <!-- 显示过滤/排序结果 -->
+        <!-- 如果想显示一个数组的过滤或排序副本，而不实际改变或重置原始数据，可以创建返回过滤或排序数组的计算属性。 -->
+        <ul>
+            <!-- evenNumbers 是计算属性，返回值是过滤后的数组 -->
+            <li v-for="number in evenNumbers">{{number}}</li>
+        </ul>
+        <!-- 在计算属性不适用的情况下 (例如，在嵌套 v-for 循环中) 可以使用一个 method 方法。 -->
+        <ul>
+            <!-- even(numbers) 是函数调用，numbers 是参数，返回值是过滤后的数组 -->
+            <li v-for="number in even(numbers)">{{number}}</li>
+        </ul>
+
+    </div>
+    <script src="vue-8-array-change.js"></script>
+</body>
+
+</html>

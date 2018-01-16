@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue组件</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <my-component></my-component>
+        <my-comp></my-comp>
+        <br>
+
+        <!-- data 必须是函数 -->
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+        <br>
+
+        <!-- Prop -->
+        <!-- myMessage 来自 props，在html标签中对其赋值，这个值就是来自父组件。 -->
+        <child my-message='Hello New Year!'></child>
+        <!-- myMessage undefined -->
+        <child></child>
+        <br>
+
+        <!-- 动态 Prop -->
+        <!-- 用 v-bind 动态地将 prop 绑定到父组件的数据。每当父组件的数据变化时，该变化也会传导给子组件。 -->
+        <!-- v-bind:prop-name -->
+        <input type="text" v-model="parentMsg">
+        <!-- message 来自 props，parentMsg 是父组件 data 中的对象。 -->
+        <dynamic-child v-bind:message="parentMsg"></dynamic-child>
+
+        <!-- 如果想把一个对象的所有属性作为 props 进行传递，可以使用不带任何参数的 v-bind -->
+        <dynamic-child-2 v-bind="todo"></dynamic-child-2>
+
+        <!-- 字面量语法 vs 动态语法：初学者常犯的一个错误是使用字面量语法传递数值。 -->
+        <!-- 因为它是一个字面量 prop，它的值是字符串 "1" 而不是一个数值。注意！！！
+             如果想传递一个真正的 JavaScript 数值，则需要使用 v-bind，从而让它的值被当作 JavaScript 表达式计算。 -->
+        <child my-message='1+1'></child>
+        <child my-message=1+1></child>
+        <child v-bind:my-message='1+1'></child>
+
+        <!-- 单向数据流 -->
+        <used-as-local initial-counter='666'></used-as-local>
+        <used-as-computed size=' Hey There '></used-as-computed>
+
+        <!-- 非 prop 特性 -->
+        <!-- 假设使用第三方组件 bs-date-input，它包含一个插件，该插件需要在 input 上添加 data-3d-date-picker 特性，可以直接添加到组件上。 -->
+        <!-- 替换/合并现有的特性 -->
+        <!-- 给日期选择器插件增加一个特殊的主题(class)，这个例子当中定义了两个不同的 class 值：
+             form-control，来自组件自身的模板
+             date-picker-theme-dark，来自父组件(!!!) -->
+        <bs-date-input data-3d-date-picker='true' class="date-picker-theme-dark"></bs-date-input>
+    </div>
+
+    <script src="vue-12-component-prop.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue组件</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+
+        #app {
+            width: 45%;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 组件1 -->
+        <!-- v-bind动态绑定list传入数据 -->
+        <my-select style="float:left" v-bind:list='city'></my-select>
+        <!-- 组件2 -->
+        <my-select style="float:right" v-bind:list='frontEnd'></my-select>
+    </div>
+
+    <script src="vue-x-component.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue组件的v-for</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="newTodoText" v-on:keyup.enter="addNewTodo" placeholder="Add a todo">
+        <!-- My Notes
+             在input中输入文本，即改变了 newTodoText 的值
+             按下回车键会触发执行 addNewTodo
+         -->
+        <ul>
+            <!-- 在组件中使用 v-for 时，key 是必须有的。 -->
+            <!-- 注意这里的 is="todo-item" 属性。这种做法在使用 DOM 模板时是十分必要的，因为在 <ul> 元素内只有 <li> 元素会被看作有效内容。
+                 这样做实现的效果与 <todo-item> 相同，但是可以避开一些潜在的浏览器解析错误。 -->
+            <!-- ？？？不自动将 item 注入到组件里的原因是，这会使得组件与 v-for 的运作紧密耦合。明确组件数据的来源能够使组件在其他场合重复使用。 -->
+            <li is="todo-item" v-for="(todo,index) in todos" v-bind:key="todo.id" v-bind:title="todo.title" v-on:remove="todos.splice(index,1)"></li>
+
+            <!-- My Notes
+                 todos 是实例中的数组，todo 是数组中的对象。
+
+                 todo-item 组件模板是一个列表项（其中包含一个button），点击button后会触发父组件的 remove 事件：对 todos 数组进行操作。
+
+                 splice() 是变异方法，会改变原始数组。向/从数组中添加/删除项目，然后返回被删除的项目。
+                 arrayObject.splice(index,howmany,item1,.....,itemX) 
+                 required: index是位置[] ，howmany是数量（为0时不删除）。optional: item是添加的新项目，相当于替换被删除的元素。
+             -->
+        </ul>
+    </div>
+    <script src="vue-9-todo-list.js"></script>
+</body>
+
+</html>

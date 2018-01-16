@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 操作元素的 class 列表和内联样式是数据绑定的一个常见需求。它们都是属性，所以可以用 v-bind 处理。 -->
+        <!-- 在将 v-bind 用于 class 和 style 时，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。 -->
+
+        <!-- Binding HTML Classes -->
+        <!-- active 这个 class 存在与否将取决于数据属性 isActive 的 truthiness -->
+        <!-- 可以在对象中传入更多属性来动态切换多个 class。 -->
+        <!-- v-bind:class 指令可以与普通的 class 属性共存 -->
+        <div class="static" v-bind:class="{active: isActive, 'text-danger': hasError}">class绑定了对象</div>
+        <div v-bind:class="classObject">class绑定了对象</div>
+        <!-- 还可以绑定一个返回对象的计算属性。这是一个常用且强大的模式。 -->
+        <div v-bind:class="classObject2">class绑定了返回对象的计算属性</div>
+
+        <!-- 可以把一个数组传给 v-bind:class，以应用一个 class 列表。 -->
+        <div v-bind:class="[activeClass, errorClass]">class绑定了数组(class列表)</div>
+        <!-- 若想根据条件切换列表中的 class，可以用三元表达式 -->
+        <!-- 这样写将始终添加 errorClass，但是只有在 isActive 是 truthy 时才添加 activeClass -->
+        <div v-bind:class="[isActive ? activeClass : '', errorClass]">class绑定了数组(三元表达式)</div>
+        <!-- 数组语法中也可以使用对象语法 -->
+        <div v-bind:class="[{active: isActive}, errorClass]">class绑定了数组</div>
+
+        <!-- 用在组件上（学完组件回来看） -->
+
+
+        <hr>
+        <!-- Binding Inline Styles -->
+        <!-- 对象语法：CSS 属性名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用单引号括起来) 来命名 -->
+        <div v-bind:style="{color: activeColor, fontSize: fontSize + 'px'}">style绑定了对象</div>
+        <div v-bind:style="styleObject">style绑定了对象</div>
+        <!-- 数组语法 -->
+        <div v-bind:style="[baseStyles, overridingStyles]">style绑定了数组</div>
+        <!-- 自动添加前缀 -->
+        <!-- 多重值：为 style 绑定中的属性提供一个包含多个值的数组，常用于提供多个带前缀的值。这样写只会渲染数组中最后一个被浏览器支持的值。 -->
+        <div v-bind:style="{display: ['-webkit-box', '-ms-flexbox', 'flex']}"></div>
+
+    </div>
+
+    <script src="vue-5-class.js"></script>
+</body>
+
+</html>

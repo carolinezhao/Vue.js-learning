@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue侦听器</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="watch">
+        <p>Ask a yes/no question: </p>
+        <input v-model='question'>
+        <p>{{answer}}</p>
+    </div>
+
+    <!-- 因为 AJAX 库和通用工具的生态已经相当丰富，Vue 核心代码没有重复 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script>
+        // 侦听器
+        // 虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。
+        // Vue 通过 watch 选项提供了一个更通用的方法，来响应数据的变化。
+        // 当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。
+
+        var watchVM = new Vue({
+            el: '#watch',
+            data: {
+                question: '',
+                answer: 'I cannot give you an answer until you ask a question.'
+            },
+            // 使用 watch 选项允许我们执行异步操作 (访问一个 API)，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态。这些都是计算属性无法做到的。
+            watch: {
+                // 如果 question 发生改变，这个函数就会运行
+                question: function (newQuestion) {
+                    this.answer = 'Waiting for you to stop typing...'
+                    this.getAnswer()
+                }
+            },
+            methods: {
+                // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。这个例子中，希望限制访问 yesno.wtf/api 的频率。
+                // AJAX 请求直到用户输入完毕才会发出。
+                getAnswer: _.debounce(
+                    function () {
+                        if (this.question.indexOf('?') === -1) {
+                            this.answer = 'Questions usually contain a question mark. ;-)'
+                            return
+                        }
+                        this.answer = 'Thinking...'
+                        var vm = this
+                        axios.get('https://yesno.wtf/api')
+                            .then(function (response) {
+                                vm.answer = _.capitalize(response.data.answer)
+                            })
+                            .catch(function (error) {
+                                vm.answer = 'Error! Could not reach the API. ' + error
+                            })
+                    },
+                    // 这是为判定用户停止输入等待的毫秒数
+                    500
+                )
+            }
+        })
+    </script>
+</body>
+
+</html>

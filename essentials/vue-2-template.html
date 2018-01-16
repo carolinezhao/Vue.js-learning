@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue实例和模板</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 插值 Interpolations -->
+        <!-- text; raw HTML; attributes; using JavaScript expressions -->
+
+        <!-- 文本：双大括号会将数据解释为普通文本，绑定的数据对象中 a 属性的值变化时，内容会随之更新。 -->
+        <p>{{a}}</p>
+        <!-- v-once 指令：用于一次性插值，数据不更新。 -->
+        <p v-once>{{a}}</p>
+
+        <!-- 原始 HTML：使用 v-html 指令。其中 rawHTML 是绑定数据对象中的一个属性，属性值为字符串。 -->
+        <!-- 注意 rawHTML 的属性值直接添加到<p>标签中间。 -->
+        <p v-html="rawHTML"></p>
+        <!-- 没有使用指令，则直接吧字符串解释为文本。 -->
+        <p>{{rawHTML}}</p>
+
+        <!-- 为标签添加属性，使用 v-bind 指令。可见 app-2 的例子。 -->
+        <p v-bind:id="dynamicID">Framework</p>
+        <!-- 对于布尔特性，存在即为 true。v-bind 用法略有不同。 -->
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+
+        <!-- 对于所有数据绑定，都可以使用 JavaScript 表达式，只能包含单个表达式。 -->
+        <!-- 应尽量使用简单的声明式逻辑。对于复杂逻辑，应使用计算属性。 -->
+        <div v-bind:id="type + '-form'">Application</div>
+        <p>{{a + 1}}</p>
+        <p>{{error? 'yes':'no'}}</p>
+        <p>{{msg.split('').reverse()}}</p>
+
+        <!-- 指令 Directives -->
+        <!-- 值预期是单个 JavaScript 表达式。指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM。 -->
+        <!-- 指令名称:参数='' 参数 (Arguments) 可以是 html 属性，也可以是 DOM 事件-->
+        <a v-bind:href="url">Vue.js</a>
+        <button v-on:click="greeting">click me</button>
+        <!-- 修饰符 (Modifiers) 是以半角句号 . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。 -->
+        <!-- .prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault() -->
+        <form v-on:submit.prevent=""></form>
+
+        <!-- 缩写 -->
+        <!-- 46，47行可分别简写为 -->
+        <a :href="url">Vue.js</a>
+        <button @click="greeting">click me</button>
+        
+    </div>
+    <script src="vue-2-instance.js"></script>
+</body>
+
+</html>

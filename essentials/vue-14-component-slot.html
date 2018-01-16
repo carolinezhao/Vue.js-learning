@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>使用插槽分发内容</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <parent-component></parent-component>
+        <br>
+        <parent-component-2></parent-component-2>
+        <br>
+        <parent-component-3></parent-component-3>
+        <br>
+        <list-with-slot :items='items'></list-with-slot>
+        <br>
+        <awesome-list :items='items'></awesome-list>
+        <br>
+    </div>
+    <script src="vue-14-component-slot.js"></script>
+</body>
+
+</html>

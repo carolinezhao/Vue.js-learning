@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue计算属性</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p>Original message: "{{ message }}"</p>
+        <!-- 可以像绑定普通属性一样在模板中绑定计算属性。Vue 知道 vm.reversedMessage 依赖于 vm.message。 -->
+        <!-- 当有同名的方法和属性时，调用属性，也会先搜索方法，然后将方法本身打印出来(因为没有执行)。 -->
+        <p>Computed reversed message: "{{ reversedMessage }}"</p>
+
+        <!-- 首次加载时，计算属性和方法都执行；在console中打印时，计算属性不重新执行，方法总是重新执行。 -->
+        <!-- 计算属性是基于它们的依赖进行缓存的，如果依赖不改变，则函数不重新执行。 -->
+        <p>Computed time: "{{ now }}"</p>        
+        <!-- 调用方法虽然得到的结果一样，但是每次都重新执行函数。 -->
+        <p>Method reversed message: "{{ reversedMessage() }}"</p>
+        <p>Method time: "{{ current() }}"</p>
+        
+        <p>{{ fullName }}</p>
+        <p>{{ firstName }}</p>
+        
+    </div>
+    <script src="vue-3-computed.js"></script>
+</body>
+
+</html>
