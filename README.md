@@ -17,7 +17,7 @@
   Babel 是干嘛的还不清楚，[ES2015](https://babeljs.io/learn-es2015/) 作为手册看
   
   
-  从一个webpack模板入手了解包含.vue的项目 [webpack-simple](https://github.com/vuejs-templates/webpack-simple)  --> *my-project*
+  从一个 vue template 入手了解包含.vue的项目 [webpack-simple](https://github.com/vuejs-templates/webpack-simple)  --> *my-project*
   
   具体原理需要看 vue-loader
   
