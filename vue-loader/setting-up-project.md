@@ -2,7 +2,7 @@
 
 使用脚手架工具 vue-cli 创建一个使用 vue-loader 的项目
 
-### 安装 vue-cli
+### 全局安装 vue-cli
 
     npm install -g vue-cli
     
