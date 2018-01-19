@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>渲染函数</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+</head>
+
+<body>
+    <!-- 知识点：渲染函数基础；实例属性API -->
+    <div id="app">
+        <!-- Vue 推荐在绝大多数情况下使用 template 来创建 HTML。
+        然而在一些场景中，需要 JavaScript 的完全编程的能力，这就是 render 函数，它比 template 更接近编译器。 -->
+        <anchored-heading :level='1'>Hello Render!</anchored-heading>
+        <anchored-heading :level='2'>Hello Render!</anchored-heading>
+        <anchored-heading :level='6'>Hello Render!</anchored-heading>
+        <anchored-heading :level='3'><child>placeholder</child></anchored-heading>
+    </div>
+    <script>
+        // 在这个例子中，需要知道当你不使用 slot 属性向组件中传递内容时，比如 anchored-heading 中的 Hello world!，这些子元素被存储在组件实例中的 $slots.default中。
+        Vue.component('anchored-heading', {
+            render: function (createElement) {
+                return createElement(
+                    'h' + this.level, // tag name 标签名称
+                    // 实例属性 vm.$slots 用来访问被插槽分发的内容。
+                    // 具名插槽有其相应的属性。default 属性包括了所有没有被包含在具名插槽中的节点。
+                    this.$slots.default // 子组件中的阵列
+                )
+            },
+            props: {
+                level: {
+                    type: Number,
+                    required: true
+                }
+            }
+        })
+
+        Vue.component('child', {
+            template: `<p>I'm from child component!</p>`
+        })
+
+        var vm = new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>
