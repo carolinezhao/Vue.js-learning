@@ -19,9 +19,12 @@
         <br>
         <!-- 完整示例 -->
         <anchored-heading :level='3'>Hey Bear!</anchored-heading>
+        <!-- 获取节点1次 -->
         <anchored-heading :level='2'>
             <children>replace</children>
         </anchored-heading>
+        <!-- 获取节点3次：文本节点；h2节点；文本节点 -->
+        <anchored-heading :level='4'>The first text.<h2>The inner text.</h2></anchored-heading>
     </div>
     <script>
         // 知识点：渲染函数基础；实例属性API；虚拟 DOM
@@ -92,13 +95,17 @@
 
 
         // 【完整示例】
-        // 
+        // 获取文本节点和子节点中的文本节点--一直向下查找直到没有子节点
         var getChildrenTextContent = function (children) {
-            return children.map(function (node) {
+            var newArray = children.map(function (node) {
+                // children 和 node 的区别是 _proto_ ？
+                console.log(typeof node, node)             
                 return node.children ?
                     getChildrenTextContent(node.children) :
                     node.text
-            }).join('')
+            })
+            console.log(newArray)          
+            return newArray.join('') // 将数组中的元素连接为一个string
         }
 
         Vue.component('anchored-heading', {
@@ -129,7 +136,7 @@
         })
 
         Vue.component('children', {
-            template: `<p>I come from child component.</p>`
+            template: `<p>Good morning.</p>`
         })
 
         // 约束
