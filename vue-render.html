@@ -18,16 +18,19 @@
         </anchored-heading-basic>
         <br>
         <!-- 完整示例 -->
+        <!-- case1 -->
         <anchored-heading :level='3'>Hey Bear!</anchored-heading>
-        <!-- 获取节点1次 -->
+        <!-- case2 获取节点1次 -->
         <anchored-heading :level='2'>
             <children>replace</children>
         </anchored-heading>
-        <!-- 获取节点3次：文本节点；h2节点；文本节点 -->
+        <!-- case3 获取节点3次：文本节点；h2节点；文本节点 -->
         <anchored-heading :level='4'>The first text.<h2>The inner text.</h2></anchored-heading>
+        <!-- case4 考察正则表达式对id的替换 -->
+        <anchored-heading :level='3'>--a%test&for--</anchored-heading>
     </div>
     <script>
-        // 知识点：渲染函数基础；实例属性API；虚拟 DOM
+        // 知识点：渲染函数基础；实例属性API；虚拟 DOM；正则表达式
 
         // Vue 推荐在绝大多数情况下使用 template 来创建 HTML。然而在一些场景中，需要 JavaScript 的完全编程的能力，这就是 render 函数，它比 template 更接近编译器。
 
@@ -40,7 +43,7 @@
             render: function (createElement) {
                 return createElement(
                     'h' + this.level, // tag name 标签名称
-                    this.$slots.default // 子组件中的阵列
+                    this.$slots.default // 子组件中的阵列，是 object
                 )
             },
             props: {
@@ -96,10 +99,12 @@
 
         // 【完整示例】
         // 获取文本节点和子节点中的文本节点--一直向下查找直到没有子节点
+        // 实际传入的参数是 this.$slots.default，但是真正通过slot显示的（子组件模板中的内容）无法被读取（case2）？
+        // 只有 case2 的 VNodes 中有tag：vue-component-4-children ？其中childre是子组件名称
         var getChildrenTextContent = function (children) {
+            console.log(children)
             var newArray = children.map(function (node) {
-                // children 和 node 的区别是 _proto_ ？
-                console.log(typeof node, node)             
+                // children 和 node 的区别是 _proto_ ？            
                 return node.children ?
                     getChildrenTextContent(node.children) :
                     node.text
@@ -110,20 +115,27 @@
 
         Vue.component('anchored-heading', {
             render: function (createElement) {
-                // create kebabCase id
+                // 创建 kebabCase 格式的 headingId, 在 createElement 中作为节点的属性
                 var headingId = getChildrenTextContent(this.$slots.default)
                     .toLowerCase()
-                    .replace(/\W+/g, '-')
-                    .replace(/(^\-|\-$)/g, '')
+                    .replace(/\W+/g, '-') // 将所有非文字符号替换为-
+                    .replace(/(^\-|\-$)/g, '') // 去掉开头的-,结尾的-
 
                 return createElement(
-                    'h' + this.level, [
-                        createElement('a', {
+                    'h' + this.level, // para1
+                    // para3: 子节点 (VNodes)
+                    [
+                        createElement('a', // para1
+                        // para2
+                        {
+                            // 模板相关属性
                             attrs: {
                                 name: headingId,
                                 href: '#' + headingId
                             }
-                        }, this.$slots.default)
+                        }, 
+                        // para3
+                        this.$slots.default)
                     ]
                 )
             },
@@ -135,8 +147,9 @@
             }
         })
 
+        // 子组件中的内容通过虚拟节点中的 this.$slots 显示
         Vue.component('children', {
-            template: `<p>Good morning.</p>`
+            template: `<p>From a component called children.</p>`
         })
 
         // 约束
