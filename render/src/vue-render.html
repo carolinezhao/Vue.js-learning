@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>渲染函数</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 基础示例 -->
+        <anchored-heading-basic :level='1'>Hello Render!</anchored-heading-basic>
+        <anchored-heading-basic :level='2'>{{message}}</anchored-heading-basic>
+        <anchored-heading-basic :level='4'>{{number + 6}}</anchored-heading-basic>
+        <anchored-heading-basic :level='3'>
+            <child>placeholder</child>
+        </anchored-heading-basic>
+        <br>
+
+        <!-- 完整示例 -->
+        <!-- case1 -->
+        <anchored-heading :level='3'>Hey Bear!</anchored-heading>
+        <!-- case2 获取节点1次 -->
+        <anchored-heading :level='2'>
+            <children>replace</children>
+        </anchored-heading>
+        <!-- case3 获取节点3次：文本节点；h2节点；文本节点 -->
+        <anchored-heading :level='4'>The first text.<h2>The inner text.</h2></anchored-heading>
+        <!-- case4 考察正则表达式对id的替换 -->
+        <anchored-heading :level='3'>--a%test&for--</anchored-heading>
+        <br>
+
+        <!-- 重复多次的元素/组件 -->
+        <repeat-vnodes></repeat-vnodes>
+
+        <!-- JSX -->
+        <normal-example></normal-example>
+        <jsx-example></jsx-example>
+    </div>
+    <script src="../lib/vue-render.js"></script>
+</body>
+
+</html>
