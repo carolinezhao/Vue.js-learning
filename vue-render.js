@@ -119,20 +119,23 @@ Vue.component('anchored-heading', {
 Vue.component('children', {
     template: `<p>From a component called children.</p>`
 })
+console.log(typeof children) // undefined
 
 // 约束
 // 组件树中的所有 VNodes 必须是唯一的。
 // 如果真的需要重复很多次的元素/组件，可以使用工厂函数(返回一个对象)来实现。
 Vue.component('repeat-vnodes', {
     render: function (createElement) {
-        return createElement('div',
-        // apply() 第二个参数是个类数组对象
-            Array.apply(null, {
-                length: 8 // length 为特殊字段：生成一个长度为8的数组
-            }).map(function () { // 对数组的元素进行赋值
-                return createElement('p', 'Vue')
-            })
-        )
+        var createRepeatNodes = Array.apply(
+                null, 
+                { 
+                    length: 8 // length 为特殊字段：生成一个长度为8的数组
+                }
+            ).map(function () { // 对数组的元素进行赋值，注意是在 apply 之外
+                return createElement('p', 'Vue')}
+            )
+        console.log(typeof createRepeatNodes) // object
+        return createElement('div', createRepeatNodes)
     }
 })
 
