@@ -9,43 +9,44 @@
 
 <body>
     <!-- 如果只需要非常简单的路由而不需要引入整个路由库，可以动态渲染一个页面级的组件。 -->
-    <div id="app">       
+    <div id="app">
     </div>
     <script>
         const NotFound = {
             template: '<p>Page not found</p>'
         }
         const Home = {
-            template: '<p>home page</p>'
+            template: '<p>Home Page</p>'
         }
         const About = {
-            template: '<p>about page</p>'
+            template: '<p>About Page</p>'
         }
 
         const routes = {
             '#/': Home,
             '#/about': About
         }
+        console.log(typeof routes, typeof About) // object object
 
         var vm = new Vue({
             el: '#app',
             data: {
-                // 不是以.html结尾的路由
+                // 此情况不适用于以.html结尾的路由
                 // currentRoute: window.location.pathname
 
                 // 以.html结尾时，可以使用hash标志位置
                 // 比如：浏览器访问 http://0.0.0.0:8080/vue-router/simple-router.html
-                // 在末尾加 #/ 或 #/about 分别访问两个路由
+                // 在浏览器中 url 的末尾加 #/ 或 #/about 分别访问两个路由
                 currentRoute: window.location.hash
             },
             computed: {
                 ViewComponent() {
-                    console.log(window.location)
-                    // this.currentRoute = this.currentRoute.replace("/vue-router/simple-router.html", '/')
+                    console.log(window.location) // 发现 hash 可用
+                    // 返回的是 routes 对象中的属性值，属性取决于当前 url 的 hash 值
                     return routes[this.currentRoute] || NotFound
                 }
             },
-            render(h) {
+            render(h) { // 渲染函数，h 是什么？
                 return h(this.ViewComponent)
             }
         })
