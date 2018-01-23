@@ -20,7 +20,9 @@ repo下的 [my-project](https://github.com/carolinezhao/Vue.js-guide-demo/tree/m
 
 
 第一句的作用相当于 git clone，模板是 webpack-simple，文件夹名称是 hello-vue；
+
 npm install 没有参数的时候，是根据项目目录下的 package.json 安装模块；
+
 安装后生成的 package-lock.json 表示已安装的模块列表，不会再重复安装 (not sure)；
 
     vue init webpack-simple hello-vue
