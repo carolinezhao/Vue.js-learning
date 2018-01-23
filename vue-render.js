@@ -124,18 +124,48 @@ console.log(typeof children) // undefined
 // 约束
 // 组件树中的所有 VNodes 必须是唯一的。
 // 如果真的需要重复很多次的元素/组件，可以使用工厂函数(返回一个对象)来实现。
+// 【创建重复节点】
 Vue.component('repeat-vnodes', {
     render: function (createElement) {
         var createRepeatNodes = Array.apply(
-                null, 
-                { 
-                    length: 8 // length 为特殊字段：生成一个长度为8的数组
-                }
-            ).map(function () { // 对数组的元素进行赋值，注意是在 apply 之外
-                return createElement('p', 'Vue')}
-            )
+            null, {
+                length: 8 // length 为特殊字段：生成一个长度为8的数组
+            }
+        ).map(function () { // 对数组的元素进行赋值，注意是在 apply 之外
+            return createElement('p', 'Vue')
+        })
         console.log(typeof createRepeatNodes) // object
-        return createElement('div', createRepeatNodes)
+        return createElement('div', {
+                attrs: {
+                    class: 'framework'
+                }
+            },
+            // 子节点
+            createRepeatNodes)
+    }
+})
+
+
+// JSX
+// 简化 render 函数：使用 Babel 插件，用于在 Vue 中使用 JSX 语法，回到更接近于模板的语法上。
+// 将 h 作为 createElement 的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的，如果在作用域中 h 失去作用，在应用中会触发报错。
+// Note the h function, which is a shorthand for a Vue instance's $createElement method, must be in the scope where the JSX is.
+
+// 安装错误？如何引入？？
+Vue.component('jsx-example', {
+    render(h) { // <-- h must be in scope
+        return <div id = "foo">h with jsx</div>
+    }
+})
+
+// 等价于原始写法
+Vue.component('normal-example', {
+    render(h) { // <-- h must be in scope
+        return h('div', {
+            attrs: {
+                id: 'foo'
+            }
+        },'hhhhh')
     }
 })
 
