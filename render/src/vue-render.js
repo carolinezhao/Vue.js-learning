@@ -1,17 +1,15 @@
-// 知识点：渲染函数基础；实例属性API；虚拟 DOM；正则表达式
+// 知识点：渲染函数基础；实例属性 vm.$slots；虚拟 DOM；正则表达式
 
 // Vue 推荐在绝大多数情况下使用 template 来创建 HTML。然而在一些场景中，需要 JavaScript 的完全编程的能力，这就是 render 函数，它比 template 更接近编译器。
 
-// 实例属性 vm.$slots 用来访问被插槽分发的内容。
-// 具名插槽有其相应的属性。default 属性包括了所有没有被包含在具名插槽中的节点。
-// 这个例子中，当不使用 slot 属性向组件中传递内容时，比如 anchored-heading 中的 Hello Render!，这些子元素被存储在组件实例中的 $slots.default中。
-
+// this.$slots.default 见后面 vm.$slots 部分的示例
+// 这个例子中，当不使用 slot 属性向组件中传递内容时，比如 anchored-heading-basic 中的 Hello Render!，这些子元素被存储在组件实例中的 $slots.default中。
 // 【基础示例】
 Vue.component('anchored-heading-basic', {
     render: function (createElement) {
         return createElement(
             'h' + this.level, // tag name 标签名称
-            this.$slots.default // 子组件中的阵列，是 object
+            this.$slots.default // 子组件中的阵列
         )
     },
     props: {
@@ -32,7 +30,7 @@ Vue.component('child', {
 // createElement 返回的不是一个实际的 DOM 元素。它更准确的名字可能是 createNodeDescription，因为它所包含的信息会告诉 Vue 页面上需要渲染什么样的节点，及其子节点。
 // 这样的节点描述为“虚拟节点 (Virtual Node)”，简写“VNode”。“虚拟 DOM”是对由 Vue 组件树建立起来的整个 VNode 树的称呼。
 
-// createElement 参数
+// createElement 参数 和 data 对象
 /* @returns {VNode}
 createElement(
     // {String | Object | Function}
@@ -44,7 +42,7 @@ createElement(
     // 一个包含模板相关属性的数据对象
     // 这样，您可以在 template 中使用这些属性。可选参数。
     {
-        // (详情见下一节)
+        // 在 VNode 数据对象中，一些属性名是级别最高的字段（见文档），允许绑定普通的 HTML 特性，就像 DOM 属性一样。
     },
 
     // {String | Array}
@@ -61,14 +59,15 @@ createElement(
     ]
 ) */
 
-// 深入 data 对象
-// 在 VNode 数据对象中，一些属性名是级别最高的字段（见文档），允许绑定普通的 HTML 特性，就像 DOM 属性一样。
-
 
 // 【完整示例】
 // 获取文本节点和子节点中的文本节点--一直向下查找直到没有子节点
-// 实际传入的参数是 this.$slots.default，但是真正通过slot显示的（子组件模板中的内容）无法被读取（case2）？
-// case2 的 VNode 中有tag：vue-component-4-children ？其中childre是子组件名称；case3的 VNodes 中的内层 VNode 有tag
+// Q：实际传入的参数是 this.$slots.default，为什么可以读取非插槽内容（即createElement创建的节点）？
+// A：[关键!] 当不使用 slot 属性向组件中传递内容时，比如 case1 中的 Hey Bear!，这些子元素被存储在组件实例中的 $slots.default中。
+
+// Q：通过实际插槽显示的（子组件模板中的内容）无法被读取（case2）？
+// Q：case2 的 VNode 中有tag：vue-component-4-children ？其中childre是子组件名称；case3的 VNodes 中的内层 VNode 有tag
+
 var getChildrenTextContent = function (children) {
     console.log(children)
     var newArray = children.map(function (node) {
@@ -94,15 +93,14 @@ Vue.component('anchored-heading', {
             // para3: 子节点 (VNodes)
             [
                 createElement('a', // para1
-                    // para2
+                    // para2：模板相关属性
                     {
-                        // 模板相关属性
                         attrs: {
                             name: headingId,
                             href: '#' + headingId
                         }
                     },
-                    // para3
+                    // para3：子节点 (VNodes)
                     this.$slots.default)
             ]
         )
@@ -121,6 +119,7 @@ Vue.component('children', {
 })
 console.log(typeof children) // undefined
 
+
 // 约束
 // 组件树中的所有 VNodes 必须是唯一的。
 // 如果真的需要重复很多次的元素/组件，可以使用工厂函数(返回一个对象)来实现。
@@ -129,7 +128,7 @@ Vue.component('repeat-vnodes', {
     render: function (createElement) {
         var createRepeatNodes = Array.apply(
             null, {
-                length: 8 // length 为特殊字段：生成一个长度为8的数组
+                length: 6 // length 为特殊字段：生成一个长度为6的数组
             }
         ).map(function () { // 对数组的元素进行赋值，注意是在 apply 之外
             return createElement('p', 'Vue')
@@ -146,6 +145,37 @@ Vue.component('repeat-vnodes', {
 })
 
 
+// 使用 JavaScript 代替模板功能
+
+
+
+// 实例属性 vm.$slots
+// 用来访问被插槽分发的内容。每个具名插槽有其相应的属性 (例如：slot="foo" 中的内容将会在 vm.$slots.foo 中被找到)。
+// default 属性包括了所有没有被包含在具名插槽中的节点。[关键!] 包括没有使用 slot 属性向组件中传递的内容。
+Vue.component('blog-post', {
+    render: function (createElement) {
+        var header = this.$slots.header
+        var body = this.$slots.default
+        var footer = this.$slots.footer
+        return createElement('div', 
+        {
+            'class':{
+                container: true
+            },
+            style:{
+                border: '2px solid #f8f8f8'
+            }
+        },
+        [
+            createElement('header', header),
+            createElement('main', body),
+            createElement('footer', footer)
+        ])
+    }
+})
+
+
+
 // JSX
 // 简化 render 函数：使用 Babel 插件，用于在 Vue 中使用 JSX 语法，回到更接近于模板的语法上。
 // 将 h 作为 createElement 的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的，如果在作用域中 h 失去作用，在应用中会触发报错。
@@ -153,7 +183,7 @@ Vue.component('repeat-vnodes', {
 
 Vue.component('jsx-example', {
     render(h) { // <-- h must be in scope
-        return <div id = "foo">h with jsx</div>
+        return <div id = "foo" > h with jsx </div>
     }
 })
 
@@ -164,7 +194,7 @@ Vue.component('normal-example', {
             attrs: {
                 id: 'foo'
             }
-        },'hhhhh')
+        }, 'hhhhh')
     }
 })
 

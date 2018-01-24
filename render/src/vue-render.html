@@ -31,13 +31,23 @@
         <anchored-heading :level='3'>--a%test&for--</anchored-heading>
         <br>
 
+        <!-- 插槽 -->
+        <blog-post>
+            <h2 slot="header">About vm.$slots</h2>       
+            <p>Here's some page content, which will be included in vm.$slots.default, because it's not inside a named slot.</p>       
+            <p slot="footer">Copyright</p>       
+            <p>If I have some content down here, it will also be included in vm.$slots.default.</p>
+        </blog-post>
+        <br>
+        
         <!-- 重复多次的元素/组件 -->
         <repeat-vnodes></repeat-vnodes>
+        <br>
 
         <!-- JSX -->
         <normal-example></normal-example>
         <jsx-example></jsx-example>
-    </div>
+    </div>   
     <script src="../lib/vue-render.js"></script>
 </body>
 
