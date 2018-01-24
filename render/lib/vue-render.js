@@ -143,7 +143,6 @@ Vue.component('repeat-vnodes', {
 // 将 h 作为 createElement 的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的，如果在作用域中 h 失去作用，在应用中会触发报错。
 // Note the h function, which is a shorthand for a Vue instance's $createElement method, must be in the scope where the JSX is.
 
-// 安装错误？如何引入？？
 Vue.component('jsx-example', {
     render: function render(h) {
         // <-- h must be in scope
@@ -157,7 +156,7 @@ Vue.component('jsx-example', {
     }
 });
 
-// 等价于原始写法
+// Babel 会将上述语句翻译为：
 Vue.component('normal-example', {
     render: function render(h) {
         // <-- h must be in scope
