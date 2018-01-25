@@ -158,6 +158,37 @@ Vue.component('blog-post', {
     }
 });
 
+// 从 this.$slots 获取 VNodes 列表中的静态内容：
+Vue.component('this-slot', {
+    render: function render(createElement) {
+        // `<div><slot></slot></div>`
+        return createElement('div', this.$slots.default);
+    }
+});
+// 从 this.$scopedSlots 中获得能用作函数的作用域插槽，这个函数返回 VNodes：
+Vue.component('scoped-slot', {
+    render: function render(createElement) {
+        // `<div><slot :text="msg"></slot></div>`
+        return createElement('div', [this.$scopedSlots.default({
+            text: this.msg
+        })]);
+    }
+});
+// 如果要用渲染函数向子组件中传递作用域插槽，可以利用 VNode 数据中的 scopedSlots 域：
+Vue.component('scoped-slot-object', {
+    render: function render(createElement) {
+        return createElement('div', [createElement('child', {
+            // pass `scopedSlots` in the data object
+            // in the form of { name: props => VNode | Array<VNode> }
+            scopedSlots: {
+                default: function _default(props) {
+                    return createElement('span', props.text);
+                }
+            }
+        })]);
+    }
+});
+
 // JSX
 // 简化 render 函数：使用 Babel 插件，用于在 Vue 中使用 JSX 语法，回到更接近于模板的语法上。
 // 将 h 作为 createElement 的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的，如果在作用域中 h 失去作用，在应用中会触发报错。

@@ -157,16 +157,14 @@ Vue.component('blog-post', {
         var header = this.$slots.header
         var body = this.$slots.default
         var footer = this.$slots.footer
-        return createElement('div', 
-        {
-            'class':{
+        return createElement('div', {
+            'class': {
                 container: true
             },
-            style:{
+            style: {
                 border: '2px solid #f8f8f8'
             }
-        },
-        [
+        }, [
             createElement('header', header),
             createElement('main', body),
             createElement('footer', footer)
@@ -174,6 +172,40 @@ Vue.component('blog-post', {
     }
 })
 
+// 从 this.$slots 获取 VNodes 列表中的静态内容：
+Vue.component('this-slot', {
+    render: function (createElement) {
+        // `<div><slot></slot></div>`
+        return createElement('div', this.$slots.default)
+    }
+})
+// 从 this.$scopedSlots 中获得能用作函数的作用域插槽(？？)，这个函数返回 VNodes：
+// Vue.component('scoped-slot', {
+//     render: function (createElement) {
+//         // `<div><slot :text="msg"></slot></div>`
+//         return createElement('div', [
+//             this.$scopedSlots.default({
+//                 text: this.msg
+//             })
+//         ])
+//     }
+// })
+// 如果要用渲染函数向子组件中传递作用域插槽(？？)，可以利用 VNode 数据中的 scopedSlots 域：
+// Vue.component('scoped-slot-object', {
+//     render(createElement) {
+//         return createElement('div', [
+//             createElement('child', {
+//                 // pass `scopedSlots` in the data object
+//                 // in the form of { name: props => VNode | Array<VNode> }
+//                 scopedSlots: {
+//                     default: function (props) {
+//                         return createElement('span', props.text)
+//                     }
+//                 }
+//             })
+//         ])
+//     }
+// })
 
 
 // JSX

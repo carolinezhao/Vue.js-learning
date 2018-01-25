@@ -31,6 +31,10 @@
         <anchored-heading :level='3'>--a%test&for--</anchored-heading>
         <br>
 
+        <!-- 重复多次的元素/组件 -->
+        <repeat-vnodes></repeat-vnodes>
+        <br>
+
         <!-- 插槽 -->
         <blog-post>
             <h2 slot="header">About vm.$slots</h2>       
@@ -39,11 +43,11 @@
             <p>If I have some content down here, it will also be included in vm.$slots.default.</p>
         </blog-post>
         <br>
-        
-        <!-- 重复多次的元素/组件 -->
-        <repeat-vnodes></repeat-vnodes>
+        <this-slot><p>Static content.</p></this-slot>
+        <!-- <scoped-slot></scoped-slot>
+        <scoped-slot-object></scoped-slot-object> -->
         <br>
-
+        
         <!-- JSX -->
         <normal-example></normal-example>
         <jsx-example></jsx-example>
