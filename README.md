@@ -5,7 +5,7 @@
 
 ### 1. 基础 
 
---> *essentials*
+--> [*essentials*](https://github.com/carolinezhao/Vue.js-guide-demo/tree/master/essentials)
 
 还没看的部分：安装，组件-杂项
 
@@ -23,13 +23,13 @@
   
   Babel [ES2015](https://babeljs.io/learn-es2015/) 作为手册看
   
-  从一个基于 webpack 模板的项目入手了解 .vue [webpack-simple](https://github.com/vuejs-templates/webpack-simple)  --> *my-project*
+  从一个基于 webpack 模板的项目入手了解 .vue [webpack-simple](https://github.com/vuejs-templates/webpack-simple)  --> [*my-project*](https://github.com/carolinezhao/Vue.js-guide-demo/tree/master/my-project)
   
   具体原理看 vue-loader
   
 ### [vue-loader docs](https://vue-loader.vuejs.org/)
 
---> *vue-loader*
+--> [*vue-loader*](https://github.com/carolinezhao/Vue.js-guide-demo/tree/master/vue-loader)
 
 *** 
 
@@ -37,7 +37,7 @@
 
 #### 渲染函数 
 
---> *render*
+--> [*render*](https://github.com/carolinezhao/Vue.js-guide-demo/tree/master/render)
   
 ***
   
@@ -45,7 +45,7 @@
 
 #### 4.1 路由
 
-简单路由(用到渲染函数) --> *vue-router*
+简单路由(用到渲染函数) --> [*vue-router*](https://github.com/carolinezhao/Vue.js-guide-demo/tree/master/vue-router)
 
 more examples: 结合 HTML5 History API, 整合第三方路由
 
