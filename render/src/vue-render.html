@@ -44,15 +44,11 @@
         </blog-post>
         <br>
         <this-slot><p>Static content.</p></this-slot>
-        <!-- <scoped-slot></scoped-slot>
-        <scoped-slot-object></scoped-slot-object> -->
-        <br>
+        <!-- <scoped-slot :text='msg'></scoped-slot> -->
+        <render-slot></render-slot>
         
-        <!-- JSX -->
-        <normal-example></normal-example>
-        <jsx-example></jsx-example>
     </div>   
-    <script src="../lib/vue-render.js"></script>
+    <script src="vue-render.js"></script>
 </body>
 
 </html>

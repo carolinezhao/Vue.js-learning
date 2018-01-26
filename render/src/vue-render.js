@@ -179,7 +179,9 @@ Vue.component('this-slot', {
         return createElement('div', this.$slots.default)
     }
 })
+
 // 从 this.$scopedSlots 中获得能用作函数的作用域插槽(？？)，这个函数返回 VNodes：
+// ？？？"TypeError: this.$scopedSlots.default is not a function"
 // Vue.component('scoped-slot', {
 //     render: function (createElement) {
 //         // `<div><slot :text="msg"></slot></div>`
@@ -188,53 +190,36 @@ Vue.component('this-slot', {
 //                 text: this.msg
 //             })
 //         ])
-//     }
+//     },
+//     // props: ['msg']
 // })
+
 // 如果要用渲染函数向子组件中传递作用域插槽(？？)，可以利用 VNode 数据中的 scopedSlots 域：
-// Vue.component('scoped-slot-object', {
-//     render(createElement) {
-//         return createElement('div', [
-//             createElement('child', {
-//                 // pass `scopedSlots` in the data object
-//                 // in the form of { name: props => VNode | Array<VNode> }
-//                 scopedSlots: {
-//                     default: function (props) {
-//                         return createElement('span', props.text)
-//                     }
-//                 }
-//             })
-//         ])
-//     }
-// })
-
-
-// JSX
-// 简化 render 函数：使用 Babel 插件，用于在 Vue 中使用 JSX 语法，回到更接近于模板的语法上。
-// 将 h 作为 createElement 的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的，如果在作用域中 h 失去作用，在应用中会触发报错。
-// Note the h function, which is a shorthand for a Vue instance's $createElement method, must be in the scope where the JSX is.
-
-Vue.component('jsx-example', {
-    render(h) { // <-- h must be in scope
-        return <div id = "foo" > h with jsx </div>
+Vue.component('render-slot', {
+    render: function(createElement) {
+        return createElement('div', [
+            createElement('baby', {
+                // pass `scopedSlots` in the data object
+                // in the form of { name: props => VNode | Array<VNode> }
+                scopedSlots: {
+                    default: function (props) {
+                        return createElement('span', props.text)
+                    }
+                }
+            })
+        ])
     }
 })
-
-// Babel 会将上述语句翻译为：
-Vue.component('normal-example', {
-    render(h) { // <-- h must be in scope
-        return h('div', {
-            attrs: {
-                id: 'foo'
-            }
-        }, 'hhhhh')
-    }
+Vue.component('baby',{
+    template:'<p>This is confusing.</p>'
 })
+
 
 
 var vm = new Vue({
     el: '#app',
     data: {
         message: 'Data from instance',
-        number: 5
+        number: 5       
     }
 })
