@@ -24,7 +24,7 @@ This method will generate a default package.json.
 
     npm install --save-dev babel-cli
     
-安装后会写入 package.json，同时生成 package-lock.json
+安装后会写入 package.json 中的 devDependencies (which is the meaning of `--save-dev`)，同时生成 package-lock.json
     
 3.把指令放在本地版本的 npm 脚本中，而不是直接通过命令行来运行 Babel。（不理解）
 
@@ -67,6 +67,6 @@ This method will generate a default package.json.
 
 Q：以上安装的所有东西都在 `~` 目录下的 `node_modules` 目录中。build 后操作目录下也会出现一个 `node_module`，两者区别是？
 
-A：如果项目目录内没有 package.json，则会自动安装到 `~` 目录下，build 后自动生成的 `node_module` 中没有要安装的插件，同时 package.json 中的 "devDependencies" 没有这些插件的名称。虽然可以运行，但使用的仍是 `~` 目录下的插件。
+A：使用 npm，如果项目目录内没有 package.json，则会自动安装到 `~` 目录下，build 后自动生成的 `node_module` 中没有要安装的插件，同时 package.json 中的 "devDependencies" 没有这些插件的名称。虽然可以运行，但使用的仍是 `~` 目录下的插件。
 
 正确的操作方法是，在项目目录内先创建 package.json，然后再进行安装。每个项目使用自己的依赖管理。
