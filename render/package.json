@@ -2,7 +2,10 @@
   "name": "render",
   "version": "1.0.0",
   "description": "",
-  "main": "vue-render.js",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib"
@@ -12,6 +15,9 @@
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-vue-jsx": "^3.5.0",
     "babel-preset-env": "^1.6.1"
   }
 }
