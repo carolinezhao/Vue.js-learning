@@ -180,6 +180,7 @@ Vue.component('this-slot', {
     }
 })
 
+// 不懂！！！
 // 从 this.$scopedSlots 中获得能用作函数的作用域插槽(？？)，这个函数返回 VNodes：
 // ？？？"TypeError: this.$scopedSlots.default is not a function"
 // Vue.component('scoped-slot', {
@@ -194,9 +195,10 @@ Vue.component('this-slot', {
 //     // props: ['msg']
 // })
 
+// 不懂！！！
 // 如果要用渲染函数向子组件中传递作用域插槽(？？)，可以利用 VNode 数据中的 scopedSlots 域：
 Vue.component('render-slot', {
-    render: function(createElement) {
+    render: function (createElement) {
         return createElement('div', [
             createElement('baby', {
                 // pass `scopedSlots` in the data object
@@ -208,10 +210,8 @@ Vue.component('render-slot', {
                 }
             })
         ])
-    }
-})
-Vue.component('baby',{
-    template:'<p>This is confusing.</p>'
+    },
+    props: ['text']
 })
 
 
@@ -220,6 +220,11 @@ var vm = new Vue({
     el: '#app',
     data: {
         message: 'Data from instance',
-        number: 5       
+        number: 5,
+        text: {
+            style: {
+                color: 'salmon'
+            }
+        }
     }
 })
