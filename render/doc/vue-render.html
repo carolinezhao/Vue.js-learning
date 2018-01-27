@@ -44,9 +44,7 @@
         </blog-post>
         <br>
         <this-slot><p>Static content.</p></this-slot>
-        <!-- <scoped-slot :text='msg'></scoped-slot> -->
-        <render-slot slot-scope="props"></render-slot>
-        
+        <parent><child></child></parent>
     </div>   
     <script src="vue-render.js"></script>
 </body>

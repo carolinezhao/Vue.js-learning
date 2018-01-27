@@ -4,6 +4,7 @@
 * 虚拟 DOM
 * createElement 参数
 * 还没看：使用 JavaScript 代替模板功能
+* 插槽（难）参考 [另一种写法](https://gist.github.com/yyx990803/faebe22e8763f5b17572b35ed96f52fe) 帮助理解
 
 以上内容 --> [doc](https://github.com/carolinezhao/Vue.js-guide-demo/tree/master/render/doc)
 

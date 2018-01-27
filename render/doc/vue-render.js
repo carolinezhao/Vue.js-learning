@@ -183,48 +183,57 @@ Vue.component('this-slot', {
 // 不懂！！！
 // 从 this.$scopedSlots 中获得能用作函数的作用域插槽(？？)，这个函数返回 VNodes：
 // ？？？"TypeError: this.$scopedSlots.default is not a function"
-// Vue.component('scoped-slot', {
-//     render: function (createElement) {
-//         // `<div><slot :text="msg"></slot></div>`
-//         return createElement('div', [
-//             this.$scopedSlots.default({
-//                 text: this.msg
-//             })
-//         ])
-//     },
-//     // props: ['msg']
-// })
-
-// 不懂！！！
-// 如果要用渲染函数向子组件中传递作用域插槽(？？)，可以利用 VNode 数据中的 scopedSlots 域：
-Vue.component('render-slot', {
+// 子组件，是下方父组件中的 child
+Vue.component('child', {
     render: function (createElement) {
-        return createElement('div', [
-            createElement('baby', {
-                // pass `scopedSlots` in the data object
-                // in the form of { name: props => VNode | Array<VNode> }
-                scopedSlots: {
-                    default: function (props) {
-                        return createElement('span', props.text)
-                    }
-                }
+        // `<div><slot :text="msg"></slot></div>`
+        return createElement('div', {
+            class: 'child'
+        }, [
+            this.$scopedSlots.default({
+                text: this.msg
             })
         ])
     },
-    props: ['text']
-})
-
-
-
-var vm = new Vue({
-    el: '#app',
-    data: {
-        message: 'Data from instance',
-        number: 5,
-        text: {
-            style: {
-                color: 'salmon'
-            }
+    data: function () {
+        return {
+            msg: 'hello from child'
         }
     }
 })
+
+// 不懂！！！
+// 如果要用渲染函数向子组件中传递作用域插槽(？？)，可以利用 VNode 数据中的 scopedSlots 域：
+// 父组件
+Vue.component('parent', {
+            render: function (createElement) {
+                return createElement('div', {
+                        class: 'parent'
+                    }, [
+                        createElement('child', {
+                            // pass `scopedSlots` in the data object
+                            // in the form of { name: props => VNode | Array<VNode> }
+                            scopedSlots: {
+                                default: function (props) {
+                                    return [createElement('p', props.text), createElement('p', 'hello from parent')]
+                                    }
+                                }
+                                // scopedSlots: {
+                                //     default: props => [
+                                //       h('span', 'hello from parent'),
+                                //       h('span', props.text)
+                                //     ]
+                                // }
+                            })])
+                }
+            })
+
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'Data from instance',
+                number: 5
+            }
+        })
