@@ -84,8 +84,9 @@ Vue.component('dynamic-child-2', {
     props: ['text'],
     template: '<ul><li>{{text}}</li></ul>'
 })
+// todo 是实例中的对象，用 v-bind 直接绑定，props 中传入的就是 todo 中的实际内容，如果随意写的名字，则没有内容能传入；
+// text 被传入作为<li>的内容，todo 中的其他东西都作为属性出现。若传入的是 isComplete，则 text 作为属性。
 // ***** 问题：props 中什么时候传入的是真实 data，什么时候只是占位？？ *****
-
 
 
 // 单向数据流
@@ -146,8 +147,13 @@ var vm = new Vue({
     data: {
         parentMsg: 'Message from parent',
         todo: {
-            text: 'Learning Vue.js',
-            isComplete: false
+            text: {
+                A: 'Learning Vue.js',
+                B: 'Learning webpack'
+            },
+            class: 'skill',
+            isComplete: false,
+            isEssential: true
         }
     },
     components: {

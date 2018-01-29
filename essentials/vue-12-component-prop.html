@@ -34,13 +34,16 @@
 
         <!-- 动态 Prop -->
         <!-- 用 v-bind 动态地将 prop 绑定到父组件的数据。每当父组件的数据变化时，该变化也会传导给子组件。 -->
-        <!-- v-bind:prop-name -->
         <input type="text" v-model="parentMsg">
-        <!-- message 来自 props，parentMsg 是父组件 data 中的对象。 -->
+        <!-- v-bind:prop-name，message 是 props 声明要用的数据，parentMsg 是父组件 data 中的对象。 -->
         <dynamic-child v-bind:message="parentMsg"></dynamic-child>
+        <!-- 显示的是 input 中的数据，如果输入新的数据，则相当于对实例中的数据进行了修改，显示的数据亦改变 -->
 
         <!-- 如果想把一个对象的所有属性作为 props 进行传递，可以使用不带任何参数的 v-bind -->
         <dynamic-child-2 v-bind="todo"></dynamic-child-2>
+        <!-- 单独使用某个属性，则要传入的文本和属性都要写 -->
+        <!-- <dynamic-child-2 v-bind:text="todo.text" v-bind:isEssential="todo.isEssential"></dynamic-child-2> -->
+        
 
         <!-- 字面量语法 vs 动态语法：初学者常犯的一个错误是使用字面量语法传递数值。 -->
         <!-- 因为它是一个字面量 prop，它的值是字符串 "1" 而不是一个数值。注意！！！
