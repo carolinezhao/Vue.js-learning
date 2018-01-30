@@ -42,7 +42,7 @@
         <!-- 如果想把一个对象的所有属性作为 props 进行传递，可以使用不带任何参数的 v-bind -->
         <dynamic-child-2 v-bind="todo"></dynamic-child-2>
         <!-- 单独使用某个属性，则要传入的文本和属性都要写 -->
-        <!-- <dynamic-child-2 v-bind:text="todo.text" v-bind:isEssential="todo.isEssential"></dynamic-child-2> -->
+        <dynamic-child-2 v-bind:text="todo.text" v-bind:isEssential="todo.isEssential"></dynamic-child-2>
         
 
         <!-- 字面量语法 vs 动态语法：初学者常犯的一个错误是使用字面量语法传递数值。 -->
