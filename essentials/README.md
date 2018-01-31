@@ -1,18 +1,35 @@
+## review 1: v-bind & props
 
 ### v-bind:attributeName="attributeValue" --> *vue-5-class*
 
-动态绑定 class 和 style 
+为标签添加属性
+
+    <p v-bind:attributeName="attributeValue"></p>
+    
+    渲染结果
+    <p attributeName="attributeValue"></p>
+
+常用场景：通过布尔特性动态绑定 class 和 style 
 
 可以传入属性/对象/对象的计算属性/数组/数组对象
 
+    HTML
     v-bind:class="classObject"
     v-bind:style="styleObject"
     
+    JS
     classObject:{
          active: true,
          error: false,
          update: true
     }
+    
+简写
+
+    v-bind:href="url"
+    :href="url"
+
+***
 
 ### props --> *vue-12-component-prop*
 
@@ -24,7 +41,7 @@
 #### 2.字面量语法 vs 动态语法
 
 * prop 是字面量语法，给其赋值均为字符串；
-* 若想传递 js 表达式，则需要用 v-bind 绑定 prop。基于1，v-bind 绑定的 prop 也有两种：
+* 若想传递 js 表达式，则需要用 v-bind 绑定 prop。基于1中两种情况，v-bind 绑定的 prop 也有两种：
 
 
         ---HTML---
@@ -43,3 +60,10 @@
                    property2:'...'
                    }
               }
+              
+
+## review 2: v-on & emit
+
+### v-on:action="functionName(parameter)" --> *vue-10-event-handle*
+
+### $emit --> *vue-13-component-event*
