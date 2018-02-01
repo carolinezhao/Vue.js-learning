@@ -66,4 +66,53 @@
 
 ### v-on:action="functionName(parameter)" --> *vue-10-event-handle*
 
-### $emit --> *vue-13-component-event*
+### $emit() --> *vue-13-component-event*
+
+    ---HTML---
+    <component v-on:event="parentFunctionName"></component>
+    此处的 v-on 为父组件监听事件。
+    
+    ---JS---
+    Vue.component ...
+    template:`<button v-on:click="childFunctionName"><button>`,
+    methods:{
+              childFunctionName: fucntion() {
+                   this.emit("event")
+              }
+            }
+    子组件中的 v-on 监听 click 事件，触发 function，并通过 emit 告知父组件。
+
+    instance ...
+    methods:{
+              parentFunctionName: function() {}    
+              
+
+## review 3: v-model 
+
+
+
+表单绑定 --> *vue-11-form-bind*
+    
+    HTML
+    <input v-model="message">
+    
+    JS
+    instance...
+    data:{
+          message:"..."
+         }
+         
+v-model 的作用相当于：
+
+    <input
+        v-bind:value="value"
+        v-on:input="event.target.value">
+
+使用自定义事件的表单输入组件 --> *vue-13-component-event*
+
+    JS
+    template: `<input
+        v-bind:value="value"
+        v-on:input="function()">`
+    props:['value']
+    在 HTML 的 input 中输入文本，即拿到父组件的传值。
