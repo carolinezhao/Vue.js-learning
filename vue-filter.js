@@ -1,12 +1,5 @@
 // Vue.js 允许自定义过滤器，可被用于一些常见的文本格式化。
-// 过滤器可以用在两个地方：双花括号插值和 v-bind 表达式。过滤器应该被添加在 JavaScript 表达式的尾部，由“管道”符号指示：
-
-// 在双花括号中
-// {{ message | capitalize }}
-
-// 在 `v-bind` 中
-// <div v-bind:id="rawId | formatId"></div>
-
+// 过滤器可以用在两个地方：双花括号插值和 v-bind 表达式。过滤器应该被添加在 JavaScript 表达式的尾部，由“管道”符号指示。
 
 // 可以在一个组件的选项中定义本地的过滤器：
 // filters: {
@@ -24,7 +17,11 @@ Vue.filter('capitalize', function (value) {
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
-// 过滤器函数总接收表达式的值 (之前的操作链的结果) 作为第一个参数。在上述例子中，capitalize 过滤器函数将会收到 message 的值作为第一个参数。
+Vue.filter('formatId', function (value) {
+  if (!value) return ''
+  value = value.toString().toLowerCase()
+  return value
+})
 
 // 过滤器可以串联：
 // {{ message | filterA | filterB }}
@@ -37,6 +34,7 @@ Vue.filter('capitalize', function (value) {
 var vm = new Vue({
   el: '#app',
   data: {
-      msg: ''
+    msg: '',
+    rawId: 'Happy-Spring'
   }
 })

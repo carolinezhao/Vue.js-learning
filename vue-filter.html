@@ -7,8 +7,13 @@
 </head>
 <body>
     <div id="app">
+        <!-- 在双花括号中 -->
         <input v-model="msg">
         <p>{{ msg | capitalize }}</p>
+        <!-- 过滤器函数总接收表达式的值 (之前的操作链的结果) 作为第一个参数。在上述例子中，capitalize 过滤器函数将会收到 message 的值作为第一个参数。 -->
+
+        <!-- 在 v-bind 中 -->
+        <div v-bind:id="rawId | formatId">Filter</div>
     </div>
     <script src="./vue-filter.js"></script>
 </body>
