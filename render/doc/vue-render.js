@@ -146,7 +146,9 @@ Vue.component('repeat-vnodes', {
 
 
 // 使用 JavaScript 代替模板功能
-
+// v-if 和 v-for
+// v-model
+// 事件 & 按键修饰符
 
 
 // 实例属性 vm.$slots
@@ -206,34 +208,35 @@ Vue.component('child', {
 // 如果要用渲染函数向子组件中传递作用域插槽(？？)，可以利用 VNode 数据中的 scopedSlots 域：
 // 父组件
 Vue.component('parent', {
-            render: function (createElement) {
-                return createElement('div', {
-                        class: 'parent'
-                    }, [
-                        createElement('child', {
-                            // pass `scopedSlots` in the data object
-                            // in the form of { name: props => VNode | Array<VNode> }
-                            scopedSlots: {
-                                default: function (props) {
-                                    return [createElement('p', props.text), createElement('p', 'hello from parent')]
-                                    }
-                                }
-                                // scopedSlots: {
-                                //     default: props => [
-                                //       h('span', 'hello from parent'),
-                                //       h('span', props.text)
-                                //     ]
-                                // }
-                            })])
+    render: function (createElement) {
+        return createElement('div', {
+            class: 'parent'
+        }, [
+            createElement('child', {
+                // pass `scopedSlots` in the data object
+                // in the form of { name: props => VNode | Array<VNode> }
+                scopedSlots: {
+                    default: function (props) {
+                        return [createElement('p', props.text), createElement('p', 'hello from parent')]
+                    }
                 }
+                // scopedSlots: {
+                //     default: props => [
+                //       h('span', 'hello from parent'),
+                //       h('span', props.text)
+                //     ]
+                // }
             })
+        ])
+    }
+})
 
 
 
-        var vm = new Vue({
-            el: '#app',
-            data: {
-                message: 'Data from instance',
-                number: 5
-            }
-        })
+var vm = new Vue({
+    el: '#app',
+    data: {
+        message: 'Data from instance',
+        number: 5
+    }
+})

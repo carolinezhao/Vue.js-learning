@@ -13,7 +13,7 @@
 // 可以全局定义过滤器：
 Vue.filter('capitalize', function (value) {
   if (!value) return ''
-  value = value.toString()
+  value = value.toString() // 将逻辑值转换为字符串
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
@@ -34,7 +34,7 @@ Vue.filter('formatId', function (value) {
 var vm = new Vue({
   el: '#app',
   data: {
-    msg: '',
+    msg: true,
     rawId: 'Happy-Spring'
   }
 })

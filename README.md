@@ -35,9 +35,13 @@
 
 ### 3. 可复用性&组合
 
-#### 渲染函数 
+#### 渲染函数&JSX
 
 --> [*render*](https://github.com/carolinezhao/Vue.js-guide-demo/tree/master/render)
+
+#### 过滤器
+
+--> *vue-filter*
   
 ***
   
