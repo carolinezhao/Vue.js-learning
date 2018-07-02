@@ -1,21 +1,30 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <!-- router-link 用于导航，渲染为 a 标签，to 指定链接 -->
+    <router-link to="/docs" class="nav">Docs-1</router-link>
+    <router-link to="/board" class="nav">Board-1</router-link>
+    <!-- /是绝对路径；没有/，为相对路径，会在已有路径后面加上 to 的内容 -->
+
+    <!-- 设置 tag 属性可以渲染为其他标签 -->
+    <!-- <a> 将作为真实的链接，而 "激活时的CSS类名" 则设置到外层的 <li> -->
+    <router-link tag="li" to="/board" class="nav">
+      <a>Board-2</a>
+    </router-link>
+
+    <!-- bind js 表达式，可以带参数 -->
+    <!-- 命名的路由 name 和 params 搭配使用 -->
+    <!-- 结果为 /user/caroline/post/123?plan=private -->
+    <router-link :to="{name: 'user', params: {username: 'caroline', post_id: 123}, query: {plan: 'private'}}" class="nav">User-1</router-link>
+    <!-- path 和 直接写在 to 中 效果相同 -->
+    <router-link :to="{path: '/docs', params: {username: 'rabbit'}}" class="nav">Docs-2</router-link>
+
+    <button v-on:click="goBack">Go Back</button>
+    <div>{{params}}</div>
+
+    <div class="component">
+      <!-- 路由出口，匹配到的组件渲染在这里 -->
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -24,7 +33,18 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  computed: {
+    params () {
+      // this.$route 访问当前路由
+      return this.$route.params
+    }
+  },
+  methods: {
+    goBack () {
+      // this.$router 访问路由器
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
     }
   }
 }
@@ -56,5 +76,20 @@ li {
 
 a {
   color: #42b983;
+}
+
+.component {
+  border: 1px solid #42b983;
+}
+
+.nav {
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.router-link-active {
+  /* 激活路由时自动添加 */
+  background-color: #2c3e50;
+  color: #fff;
 }
 </style>
