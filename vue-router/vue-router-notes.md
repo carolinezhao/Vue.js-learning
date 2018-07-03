@@ -4,7 +4,51 @@
 
 `<router-link> 相关用法` --> ../my-project/src/App.vue
 
-路由对象 route object
+路径 '/' 必须有 exact，否则永远是 active 状态
+```js
+<router-link to="/" exact>
+```
+
+命名路由
+```js
+// 路由配置
+routes: [
+  {
+    path: '/user/:userId',
+    name: 'user',
+    component: User
+  }
+```
+```html
+<router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link>
+```
+```js
+// 函数中
+router.push({ name: 'user', params: { userId: 123 }})
+```
+
+命名视图：同级展示多个视图
+```js
+// 路由配置
+routes: [
+    {
+      path: '/',
+      components: {
+        default: Foo,
+        a: Bar,
+        b: Baz
+      }
+    }
+```
+同一路由对应多个组件，分别渲染到对应 name 的视图中。
+```html
+<router-view ></router-view>
+<router-view name="a"></router-view>
+<router-view name="b"></router-view>
+```
+
+## 路由对象 route object
+
 ```js
 {
     path: '', // 绝对路径

@@ -21,10 +21,12 @@
     <button v-on:click="goBack">Go Back</button>
     <div>{{params}}</div>
 
-    <div class="component">
-      <!-- 路由出口，匹配到的组件渲染在这里 -->
-      <router-view></router-view>
-    </div>
+    <!-- 路由出口，匹配到的组件渲染在这里 -->
+    <!-- 没有设置名字的为 default，name 对应的组件在 main.js 中设置 -->
+    <router-view class="component-a" name="a"></router-view>
+    <transition name="slide-fade">
+      <router-view class="component-b"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -78,8 +80,12 @@ a {
   color: #42b983;
 }
 
-.component {
+.component-a {
   border: 1px solid #42b983;
+}
+
+.component-b {
+  border: 1px solid salmon;
 }
 
 .nav {
@@ -91,5 +97,12 @@ a {
   /* 激活路由时自动添加 */
   background-color: #2c3e50;
   color: #fff;
+}
+
+.slide-fade-enter-active {
+  transition: all 1s;
+}
+.slide-fade-leave-active {
+  transition: all .2s;
 }
 </style>

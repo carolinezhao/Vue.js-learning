@@ -7,7 +7,11 @@ import Docs from './Docs.vue' // 引入组件
 Vue.use(Router) // 安装路由
 
 const User = { // 定义组件
-  template: '<div>Params: {{this.$route.params}}</div>'
+  template: `<div>Params: {{this.$route.params}}</div>`
+}
+
+const Nav = {
+  template: `<div>this is nav bar</div>`
 }
 
 const router = new Router({ // 路由实例
@@ -23,7 +27,10 @@ const router = new Router({ // 路由实例
     { // 动态路径参数，以冒号开头，可以设置多个
       path: '/user/:username/post/:post_id',
       name: 'user',
-      component: User
+      components: {
+        default: User,
+        a: Nav
+      }
       // /user/docs 和 /user/board 都会映射到相同路由
       // 参数值会被设置到 this.$route.params
     }
