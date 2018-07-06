@@ -154,3 +154,50 @@ v-model 的作用相当于：
         v-on:input="function()">`
     props:['value']
     在 HTML 的 input 中输入文本，即拿到父组件的传值。
+
+
+## review 4: computed, methods, watch
+
+计算属性名和 data 中的普通属性名不能重复。
+
+计算属性中的函数默认是 getter。需要 setter 时可以设置，但是 getter 必须有。
+
+```js
+computed: {
+    fullName: { // 计算属性名
+        get: function () { // getter
+            return
+        },
+        set: function () { // setter
+        }
+    }
+}
+```
+
+### computed vs. methods
+
+--> _vue-3-computed_
+
+```html
+<!-- computed -->
+<div>{{computedName}}</div>
+<!-- methods -->
+<div>{{methodName()}}</div>
+```
+
+同一个函数定义为计算属性或者方法，两者的结果是相同的，不同的是：
+
+- 只有在依赖的东西发生变化时，计算属性才更新 (基于依赖进行缓存)。
+- 无论依赖的东西是否发生变化，每当触发重新渲染时，调用方法将总会再次执行函数。
+
+对于开销较大的依赖，使用计算属性；如果不希望有缓存，则使用方法。
+
+### computed vs. watch
+
+--> _vue-3-computed_ fullname
+
+当有一些数据需要依赖其它数据变动，通常更好的做法是使用计算属性而不是命令式的 watch 回调。
+
+--> _vue-4-watcher_
+
+当需要在数据变化时执行异步或开销较大的操作时，通过 watch 来响应数据的变化。

@@ -36,7 +36,7 @@ var vm = new Vue({
         }
     },
     methods: {
-        reversedMessage: function () {
+        reversedMessageMet: function () {
             console.log("method1")
             return this.message.split('').reverse().join('')
         },
