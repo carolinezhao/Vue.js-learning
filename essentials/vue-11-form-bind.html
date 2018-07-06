@@ -43,6 +43,8 @@
         <p>Text is:</p>
         <p style="white-space: pre-line;">{{text}}</p>
         <hr>
+
+        <!-- id 没有实质作用 -->
         <!-- 单个复选框，绑定到布尔值 -->
         <input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">{{checked}}</label>
@@ -65,16 +67,17 @@
         <label for="hamburger">Hamburger</label>
         <p>Picked: {{picked}}</p>
         <hr>
+
         <!-- 下拉列表单选 -->
         <select v-model="selected">
-            <!-- 当选中时，`selected` 为字符串 "abc" -->
             <!-- 如果 v-model 表达式的初始值未能匹配任何选项，<select> 元素将被渲染为“未选中”状态。
                 在 iOS 中，这会使用户无法选择第一个选项。因为这样的情况下，iOS 不会触发 change 事件。
-                因此，更推荐像上面这样提供一个值为空的禁用选项。 -->
+                因此，推荐提供一个值为空的禁用选项。 -->
             <option disabled value="">请选择</option>
             <option>A</option>
             <option>B</option>
             <option>C</option>
+            <!-- 如果设置了 value 则选中的是 value 值 -->
         </select>
         <p>Selected: {{selected}}</p>
         <hr>
@@ -94,20 +97,28 @@
         <p>Selected: {{listSelected}}</p>
         <hr>
 
-        <!-- *** 值绑定 ***（不太懂） -->
-        <!-- 有时希望把值绑定到 Vue 实例的一个动态属性上，这时可以用 v-bind 实现，并且这个属性的值可以不是字符串。 -->
+
+
+        <!-- *** 值绑定 *** -->
+        <!-- 用 v-bind 把值绑定到 Vue 实例的一个动态属性上，这个属性的值可以不是字符串【重要】。 -->
         <!-- 复选框 -->
         <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
-        <!-- 没有 id 也能关联上？ -->
         <label>{{toggle}}</label>
         <!-- 这里的 true-value 和 false-value 特性并不会影响输入控件的 value 特性，因为浏览器在提交表单时并不会包含未被选中的复选框。
              如果要确保表单中这两个值中的一个能够被提交，(比如“yes”或“no”)，请换用单选按钮。-->
         <hr>
-        <!-- 单选按钮 ？？？不懂 -->
+        <!-- 单选按钮 -->
         <input type="radio" v-model="pick" v-bind:value="a">
-        <label></label>
-
+        <label>{{a}}</label>
+        <input type="radio" v-model="pick" v-bind:value="b">
+        <label>{{b}}</label>
+        <div>{{pick}}</div>
+        <hr>
         <!-- 选择框的选项 -->
+        <select v-model="chosen">
+            <option v-bind:value="{number: 123, id: 001}">A</option>
+        </select>
+        <div>{{chosen}}</div>
 
 
 

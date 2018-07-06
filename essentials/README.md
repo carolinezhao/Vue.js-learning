@@ -87,21 +87,59 @@
               parentFunctionName: function() {}    
               
 
-## review 3: v-model 
+## review 3: v-model
 
+v-model 本质上是语法糖。
 
+v-model 会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将 Vue 实例的数据作为数据来源。因此应该通过 js 在组件的 data 选项中声明初始值。
 
 表单绑定 --> *vue-11-form-bind*
+
+输入框
     
-    HTML
+```HTML
     <input v-model="message">
-    
-    JS
-    instance...
-    data:{
-          message:"..."
-         }
-         
+    <!-- 同步显示在 input 中输入的值 -->
+    <div>{{message}}</div>
+``` 
+```js
+    data: {
+        message: ''
+    }
+```
+
+多选和单选的区别在于 v-model 绑定的初始值类型
+- 初始值为 fasle，则选中为 true
+- 初始值为 []，则为多选，数组元素为选中的所有 input 的 value
+- 初始值为 ''，则为单选，选中的值为 input 的 value
+
+```HTML
+    <input type="checkbox" v-model="checked">
+
+    <input type="checkbox" value="rabbit" v-model="checkedNames">
+    <input type="checkbox" value="bear" v-model="checkedNames">
+```
+```js
+    data: {
+        checked: false,
+        checkedNames: []
+    }
+```
+
+值 vs 值绑定
+- 普通值只能是 string 或 boolean
+- 值绑定可以是任何类型值
+
+```HTML
+    <input value="string">
+    <input v-bind:value="object">
+```
+```js
+    data: {
+        object: {}
+    }
+```
+
 v-model 的作用相当于：
 
     <input

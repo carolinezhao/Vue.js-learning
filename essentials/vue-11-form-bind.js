@@ -21,6 +21,8 @@ var vm = new Vue({
         }],
         toggle: 'no',
         pick: '',
-        a: 'hi'
+        a: 'hi',
+        b: 'hello',
+        chosen: ''
     }
 })
