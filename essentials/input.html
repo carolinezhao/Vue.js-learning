@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>input</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+        }
+
+        input, select {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="checkbox" v-model="checked" @change="changeCheckAll" @input="inputEvent">
+        <label>All</label>
+        <div v-for="(obj, index) in objectsArr">
+            <input type="checkbox" :value="{index: index, type: obj.type}" v-model="checkedObjs">
+            <label>{{obj.type}}</label>
+        </div>
+        <div>{{checkedObjs}}</div>
+        <hr>
+
+        <!-- reference: https://jsfiddle.net/posva/oqe9e8pb/ -->
+        <div>事件：input 与 change 的对比</div>
+        <input type="text" @input="addEvent" @change="addEvent">
+        <input type="checkbox" @input="addEvent" @change="addEvent">
+        <input type="radio" name="radio" value="1" @input="addEvent" @change="addEvent">
+        <input type="radio" name="radio" value="2" @input="addEvent" @change="addEvent">
+        <select @input="addEvent" @change="addEvent">
+            <option value="one">one</option>
+            <option value="two">two</option>
+        </select>
+        <input type="range" min="0" max="100" @input="addEvent" @change="addEvent">
+        <button @click="empty">Empty</button>
+        <ul>
+            <li v-for="event in events">{{ eventText(event) }}</li>
+        </ul>
+    </div>
+
+    <script src="input.js"></script>
+</body>
+
+</html>
