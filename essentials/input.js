@@ -1,6 +1,7 @@
 var vm = new Vue({
     el: '#app',
     data: {
+        ifCheck: false,
         checked: false,
         checkedObjs: [],
         objectsArr: [{
@@ -30,15 +31,26 @@ var vm = new Vue({
         }
     },
     methods: {
-        // ====== 全选 ======
-        changeCheckAll() {
+        // ====== 是否选中 ======
+        changeEvent(e) {
             console.log('@change')
-            // this.checked = !this.checked // doesn't work
+            // this.ifCheck = !this.ifCheck // doesn't work，change 事件无法改变 v-model 的值 (它自己会改变)
+        },
+        inputEvent(e) {
+            console.log('@input')
+            this.ifCheck = !this.ifCheck // work，因为 v-model 拿到的就是通过 input 事件得到的值 (即使不写也默认执行此操作)
+        },
+        // ====== 全选 ======
+        changeCheckAll(e) {
+            console.log('@change')
+            console.log(e.target.checked);
+            console.log(this.checked); // 与上相同
             this.checkedObjs = (this.checked) ? this.checkedAllObjs : [] // work
         },
-        inputEvent() {
+        inputCheckAll(e) {
             console.log('@input')
-            // this.checked = !this.checked // works
+            console.log(e.target.checked);
+            console.log(this.checked); // 与上相反 (默认执行 !this.checked)
             // this.checkedObjs = (this.checked) ? this.checkedAllObjs : [] // doesn't work
         },
         // ====== 对比 input 和 change ======

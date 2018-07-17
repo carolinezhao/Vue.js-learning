@@ -10,7 +10,8 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
         }
 
-        input, select {
+        input,
+        select {
             outline: none;
         }
     </style>
@@ -18,17 +19,26 @@
 
 <body>
     <div id="app">
-        <input type="checkbox" v-model="checked" @change="changeCheckAll" @input="inputEvent">
+        <div>input type="checkbox" 当 v-model 绑定的值为 boolean 时，自动切换。</div>
+        <label>v-model: {{ifCheck}}</label>
+        <input type="checkbox" v-model="ifCheck" @change="changeEvent" @input="inputEvent">
+        <hr>
+        
+        <div>input 事件总是先于 change 事件被调用。</div>
+        <div>input 事件中会改变 v-model 绑定的 boolean 值，而 change 不会。因此如果需要使用这个 boolean 值进行计算，要写在 change 事件中。</div>
+        <div>多选/全选操作：点击选中时，绑定的值会被加入到 v-model (一个一个选)；反之当 v-model 中有了该值，会被自动选中 (全选)。</div>
+        <input type="checkbox" v-model="checked" @change="changeCheckAll" @input="inputCheckAll">
         <label>All</label>
+        <div>v-model: {{checked}}</div>
         <div v-for="(obj, index) in objectsArr">
             <input type="checkbox" :value="{index: index, type: obj.type}" v-model="checkedObjs">
             <label>{{obj.type}}</label>
         </div>
         <div>{{checkedObjs}}</div>
+        <a href="https://c.runoob.com/codedemo/3870">reference</a>
         <hr>
 
-        <!-- reference: https://jsfiddle.net/posva/oqe9e8pb/ -->
-        <div>事件：input 与 change 的对比</div>
+        <div>不同类型 input 元素的 input 事件与 change 事件对比</div>
         <input type="text" @input="addEvent" @change="addEvent">
         <input type="checkbox" @input="addEvent" @change="addEvent">
         <input type="radio" name="radio" value="1" @input="addEvent" @change="addEvent">
@@ -42,6 +52,7 @@
         <ul>
             <li v-for="event in events">{{ eventText(event) }}</li>
         </ul>
+        <a href="https://jsfiddle.net/posva/oqe9e8pb/">reference</a>
     </div>
 
     <script src="input.js"></script>
