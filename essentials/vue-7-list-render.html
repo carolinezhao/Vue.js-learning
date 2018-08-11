@@ -25,10 +25,6 @@
     
         建议尽可能在使用 v-for 时提供 key，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升。-->
 
-        <!-- ！！对于 key 中内容的要求（不太懂，应该和什么对应？？）！！
-        Property or method "items1" is not defined on the instance but referenced during render. 
-        Make sure that this property is reactive, either in the data option, or for class-based components, by initializing the property.  -->
-
         <ul>
             <!-- items 是源数据数组并且 item 是数组元素迭代的别名。 -->
             <!-- items是数组，item是数组中的对象，todo是对象中的属性 -->
@@ -37,7 +33,6 @@
                 {{item.todo}}
             </li>
         </ul>
-        <div>{{items}}</div>
         <ul>
             <!-- 在 v-for 块中，拥有对父作用域属性的完全访问权限。v-for 还支持一个可选的第二个参数为当前项的索引。 -->
             <!-- parentTodo 与 items 同级 -->
@@ -46,7 +41,7 @@
             </li>
         </ul>
         <ul>
-            <!-- 可以用 v-for 通过一个对象的属性来迭代。 -->
+            <!-- 可以用 v-for 通过一个对象的属性来迭代。在遍历对象时，是按 Object.keys() 的结果遍历。 -->
             <li v-for="value in object" :key="object.id">
                 {{value}}
             </li>

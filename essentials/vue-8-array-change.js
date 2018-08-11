@@ -14,20 +14,20 @@ var vm = new Vue({
         replace: function () {
             // 非变异方法
             this.items = this.items.filter(function (item) {
-                return item.todo.match(/coding/) // 这是啥意思？
+                return item.todo.match(/coding/) // string.match(RegExp)
             })
         },
         // 被筛选数组作为参数调用
-        even:function(numbers) {
+        even: function (numbers) {
             return numbers.filter(function (number) {
                 return number % 2 === 0
             })
         }
     },
-    computed:{
+    computed: {
         // 通过 this 使用被筛选数组
-        evenNumbers:function(){
-            return this.numbers.filter(function(number) {
+        evenNumbers: function () {
+            return this.numbers.filter(function (number) {
                 return number % 2 === 0
             })
         }

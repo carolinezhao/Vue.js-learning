@@ -6,19 +6,19 @@ var vm = new Vue({
         loginType: 'email',
         verifyType: 'phone'
     },
-    methods:{
-        toggleLogin:function(){
+    methods: {
+        toggleLogin: function () {
             if (this.loginType === 'email') {
                 return this.loginType = 'username'
             } else {
-                return this.loginType = 'email'                
+                return this.loginType = 'email'
             }
         },
-        toggleVerify:function(){
+        toggleVerify: function () {
             if (this.verifyType === 'phone') {
                 return this.verifyType = 'wechat'
             } else {
-                return this.verifyType = 'phone'                
+                return this.verifyType = 'phone'
             }
         },
     }

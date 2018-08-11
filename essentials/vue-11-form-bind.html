@@ -24,6 +24,7 @@
         textarea {
             font-size: 15px;
             padding: 5px;
+            outline: none;
         }
 
     </style>
@@ -44,7 +45,7 @@
         <p style="white-space: pre-line;">{{text}}</p>
         <hr>
 
-        <!-- id 没有实质作用 -->
+        <!-- id 的作用仅限于和 for 绑定，点击文字也可操作 checkbox -->
         <!-- 单个复选框，绑定到布尔值 -->
         <input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">{{checked}}</label>
@@ -82,7 +83,7 @@
         <p>Selected: {{selected}}</p>
         <hr>
         <!-- 下拉列表多选，绑定到一个数组 -->
-        <!-- ？？？不能多选啊？？？ -->
+        <!-- mac 下需要按住 cmd 选择多个 -->
         <select v-model="multiSelected" multiple style="width: 50px;">
             <option>A</option>
             <option>B</option>
@@ -119,12 +120,28 @@
             <option v-bind:value="{number: 123, id: 001}">A</option>
         </select>
         <div>{{chosen}}</div>
+        <hr>
 
 
 
         <!-- *** 修饰符 *** -->
-
+        <!-- .lazy 
+        普通情况：input 事件触发同步；.lazy：change 事件 (回车) 触发同步 -->
+        <input v-model.lazy="messageLazy">
+        <p>Message is: {{messageLazy}}</p>
         
+        <!-- .number
+        一般情况下，即使 type 是 number，输入元素的值也会返回字符串；
+        .number 自动将输入值转为数值类型 -->
+        <input v-model.number="ageNum">
+        <p>The result of .number : {{typeof ageNum}}</p>
+        <input v-model="ageStr" type="number">
+        <p>The result of type="number" : {{typeof ageStr}}</p>
+
+        <!-- .trim 
+        自动去掉输入的首尾空白字符 -->
+        <input v-model.trim="msg">
+        <p>The result of .trim : [{{msg}}]</p>
 
     </div>
 

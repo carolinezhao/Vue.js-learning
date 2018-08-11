@@ -23,6 +23,10 @@ var vm = new Vue({
         pick: '',
         a: 'hi',
         b: 'hello',
-        chosen: ''
+        chosen: '',
+        messageLazy: '',
+        ageNum: '',
+        ageStr: '',
+        msg: ''
     }
 })
